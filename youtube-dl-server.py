@@ -156,7 +156,7 @@ async def get_file(request):
             {"success": False, "error": "/get called without a 'url' in form data"}
         )
 
-    return FileResponse('static/' + url)
+    return FileResponse('/youtube-dl/static/' + url)
 
 
 routes = [
