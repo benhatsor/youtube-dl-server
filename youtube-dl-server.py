@@ -36,7 +36,7 @@ app_defaults = {
     "YDL_OUTPUT_TEMPLATE": config(
         "YDL_OUTPUT_TEMPLATE",
         cast=str,
-        default="/youtube-dl/%(title).200s [%(id)s].%(ext)s",
+        default="/youtube-dl/%(id)s.%(ext)s",
     ),
     "YDL_ARCHIVE_FILE": config("YDL_ARCHIVE_FILE", default=None),
     "YDL_UPDATE_TIME": config("YDL_UPDATE_TIME", cast=bool, default=True),
