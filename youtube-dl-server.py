@@ -125,7 +125,7 @@ def get_ydl_options(request_options):
     if ydl_vars["YDL_RECODE_VIDEO_FORMAT"]:
         postprocessors.append(
             {
-                "key": "FFmpegVideoConvertor",
+                "key": "FFmpegVideoConverter",
                 "preferedformat": ydl_vars["YDL_RECODE_VIDEO_FORMAT"],
             }
         )
