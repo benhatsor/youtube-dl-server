@@ -166,7 +166,7 @@ routes = [
     Route("/youtube-dl/q", endpoint=q_put, methods=["POST"]),
     Route("/youtube-dl/update", endpoint=update_route, methods=["PUT"]),
 
-    Route("/youtube-dl/get", endpoint=get_file),
+    Route("/youtube-dl/get", endpoint=get_file, methods=["GET"]),
 ]
 
 app = Starlette(debug=True, routes=routes, middleware=middleware)
