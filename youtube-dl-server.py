@@ -148,13 +148,25 @@ def download(url, request_options):
         ydl.download([url])
 
 
+async def get_file(request):
+    form = await request.form()
+    url = form.get("url").strip()
+
+    if not url:
+        return JSONResponse(
+            {"success": False, "error": "/get called without a 'url' in form data"}
+        )
+
+    return FileResponse('static/' + url)
+
+
 routes = [
     Route("/", endpoint=redirect),
     Route("/youtube-dl", endpoint=dl_queue_list),
     Route("/youtube-dl/q", endpoint=q_put, methods=["POST"]),
     Route("/youtube-dl/update", endpoint=update_route, methods=["PUT"]),
 
-    Mount('/youtube-dl/static', app=StaticFiles(directory='static'), name="static")
+    Route("/youtube-dl/get", endpoint=get_file),
 ]
 
 app = Starlette(debug=True, routes=routes, middleware=middleware)
