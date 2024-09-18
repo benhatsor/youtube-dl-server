@@ -9,6 +9,22 @@ from starlette.routing import Route
 from starlette.templating import Jinja2Templates
 from starlette.background import BackgroundTask
 
+
+from starlette.middleware import Middleware
+from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
+from starlette.middleware.trustedhost import TrustedHostMiddleware
+
+# Ensure that all requests include an 'example.com' or
+# '*.example.com' host header, and strictly enforce https-only access.
+middleware = [
+    Middleware(
+        TrustedHostMiddleware,
+        allowed_hosts=['codeit.codes'],
+    ),
+    Middleware(HTTPSRedirectMiddleware)
+]
+
+
 from yt_dlp import YoutubeDL, version
 
 templates = Jinja2Templates(directory="templates")
