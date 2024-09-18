@@ -11,7 +11,7 @@ from starlette.background import BackgroundTask
 
 
 from starlette.middleware import Middleware
-from starlette.middleware.corsmiddleware import CORSMiddleware
+from starlette.middleware.cors import CORSMiddleware
 
 middleware = [
     Middleware(
