@@ -15,8 +15,6 @@ from starlette.middleware import Middleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.middleware.trustedhost import CORSMiddleware
 
-# Ensure that all requests include an 'example.com' or
-# '*.example.com' host header, and strictly enforce https-only access.
 middleware = [
     Middleware(
         CORSMiddleware,
