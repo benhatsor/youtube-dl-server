@@ -13,14 +13,14 @@ from starlette.background import BackgroundTask
 from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
-from starlette.middleware.trustedhost import TrustedHostMiddleware
+from starlette.middleware.trustedhost import CORSMiddleware
 
 # Ensure that all requests include an 'example.com' or
 # '*.example.com' host header, and strictly enforce https-only access.
 middleware = [
     Middleware(
-        TrustedHostMiddleware,
-        allowed_hosts=['codeit.codes'],
+        CORSMiddleware,
+        allow_origins=['https://codeit.codes'],
     ),
     Middleware(HTTPSRedirectMiddleware)
 ]
