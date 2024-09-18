@@ -10,6 +10,7 @@ from starlette.templating import Jinja2Templates
 from starlette.background import BackgroundTask
 
 
+from starlette.applications import Starlette
 from starlette.middleware import Middleware
 from starlette.middleware.httpsredirect import HTTPSRedirectMiddleware
 from starlette.middleware.trustedhost import TrustedHostMiddleware
