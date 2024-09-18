@@ -61,24 +61,24 @@ async def q_put(request):
     form = await request.form()
     url = form.get("url").strip()
     ui = form.get("ui")
-    options = {"format": form.get("format")}
 
     if not url:
         return JSONResponse(
             {"success": False, "error": "/q called without a 'url' in form data"}
         )
 
-    task = BackgroundTask(download, url, options)
-
     print("Added url " + url + " to the download queue")
 
-    if not ui:
-        return JSONResponse(
-            {"success": True, "url": url, "options": options}, background=task
-        )
-    return RedirectResponse(
-        url="/youtube-dl?added=" + url, status_code=HTTP_303_SEE_OTHER, background=task
-    )
+    def callback(d):
+        if d['status'] == 'finished':
+              print("Done!")
+              return FileResponse('/youtube-dl/static/' + url)
+
+    options = {"format": form.get("format"), "hook": callback}
+    
+    download(url, options)
+
+    
 
 
 async def update_route(scope, receive, send):
@@ -134,12 +134,15 @@ def get_ydl_options(request_options):
             }
         )
 
+    hook = request_options.get("hook")
+    
     return {
         "format": ydl_vars["YDL_FORMAT"],
-        #"postprocessors": postprocessors,
+        "postprocessors": postprocessors,
         "outtmpl": ydl_vars["YDL_OUTPUT_TEMPLATE"],
         "download_archive": ydl_vars["YDL_ARCHIVE_FILE"],
         "updatetime": ydl_vars["YDL_UPDATE_TIME"] == "True",
+        'progress_hooks': [hook]
     }
 
 
