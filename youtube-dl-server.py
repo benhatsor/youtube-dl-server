@@ -149,8 +149,7 @@ def download(url, request_options):
 
 
 async def get_file(request):
-    form = await request.form()
-    url = form.get("url").strip()
+    url = request.query_params['url']
 
     if not url:
         return JSONResponse(
