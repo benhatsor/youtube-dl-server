@@ -21,6 +21,10 @@ middleware = [
 ]
 
 
+from starlette.routing import Mount
+from starlette.staticfiles import StaticFiles
+
+
 from yt_dlp import YoutubeDL, version
 
 templates = Jinja2Templates(directory="templates")
@@ -36,7 +40,7 @@ app_defaults = {
     "YDL_OUTPUT_TEMPLATE": config(
         "YDL_OUTPUT_TEMPLATE",
         cast=str,
-        default="/youtube-dl/%(id)s.%(ext)s",
+        default="/youtube-dl/static/%(id)s.%(ext)s",
     ),
     "YDL_ARCHIVE_FILE": config("YDL_ARCHIVE_FILE", default=None),
     "YDL_UPDATE_TIME": config("YDL_UPDATE_TIME", cast=bool, default=True),
@@ -149,6 +153,8 @@ routes = [
     Route("/youtube-dl", endpoint=dl_queue_list),
     Route("/youtube-dl/q", endpoint=q_put, methods=["POST"]),
     Route("/youtube-dl/update", endpoint=update_route, methods=["PUT"]),
+
+    Mount('/youtube-dl/static', app=StaticFiles(directory='static'), name="static")
 ]
 
 app = Starlette(debug=True, routes=routes, middleware=middleware)
