@@ -4,7 +4,7 @@ import subprocess
 from starlette.status import HTTP_303_SEE_OTHER
 from starlette.applications import Starlette
 from starlette.config import Config
-from starlette.responses import JSONResponse, RedirectResponse
+from starlette.responses import JSONResponse, RedirectResponse, FileResponse
 from starlette.routing import Route
 from starlette.templating import Jinja2Templates
 from starlette.background import BackgroundTask
